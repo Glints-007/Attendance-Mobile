@@ -12,7 +12,7 @@
         android:layout_marginTop="216dp"
         android:fontFamily="serif-monospace"
         android:text="Trouble Logging In?"
-        android:textColor="#9078b8"
+        android:textColor="@color/primary_light_color"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,6 +58,7 @@
                 android:id="@+id/email_forgot"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/input_scheme_bg"
                 android:drawableStart="@drawable/email_icon"
                 android:drawablePadding="6dp"
                 android:hint="@string/email"
@@ -69,7 +70,7 @@
         android:id="@+id/reset_btn"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#9078b8"
+        android:backgroundTint="@color/primary_light_color"
         android:text="Reset Password"
         android:textColor="@android:color/white"
         android:textSize="18sp"
@@ -79,5 +80,19 @@
         app:layout_constraintEnd_toEndOf="@+id/cardView"
         app:layout_constraintStart_toStartOf="@+id/cardView"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/login_page_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:fontFamily="sans-serif-medium"
+        android:text="Back to the previous page"
+        android:textColor="@color/primary_light_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reset_btn"
+        app:layout_constraintVertical_bias="0.04" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

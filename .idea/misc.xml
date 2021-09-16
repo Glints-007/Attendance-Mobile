@@ -8,6 +8,7 @@
         <entry key="..\:/Android/Attendance/app/src/main/res/drawable-v24/inputtask_bg.xml" value="0.2703125" />
         <entry key="..\:/Android/Attendance/app/src/main/res/drawable/bg_shape.xml" value="0.2703125" />
         <entry key="..\:/Android/Attendance/app/src/main/res/drawable/button_bg.xml" value="0.2703125" />
+        <entry key="..\:/Android/Attendance/app/src/main/res/drawable/gradien.xml" value="0.2703125" />
         <entry key="..\:/Android/Attendance/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.2703125" />
         <entry key="..\:/Android/Attendance/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.2703125" />
         <entry key="..\:/Android/Attendance/app/src/main/res/drawable/input_scheme_bg.xml" value="0.2703125" />
@@ -17,8 +18,9 @@
         <entry key="..\:/Android/Attendance/app/src/main/res/drawable/side_nav_bar.xml" value="0.2703125" />
         <entry key="..\:/Android/Attendance/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.33197278911564626" />
         <entry key="..\:/Android/Attendance/app/src/main/res/layout/activity_forgot.xml" value="0.25416666666666665" />
+        <entry key="..\:/Android/Attendance/app/src/main/res/layout/activity_item_log.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/Attendance/app/src/main/res/layout/activity_login.xml" value="0.264" />
-        <entry key="..\:/Android/Attendance/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Android/Attendance/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Android/Attendance/app/src/main/res/layout/activity_regist.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/Attendance/app/src/main/res/layout/activity_splash_screen.xml" value="0.264" />
         <entry key="..\:/Android/Attendance/app/src/main/res/layout/content_main.xml" value="0.25416666666666665" />
