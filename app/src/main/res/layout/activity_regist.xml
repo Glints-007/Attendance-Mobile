@@ -21,7 +21,7 @@
         android:layout_marginBottom="50dp"
         android:text="Register Account"
         android:textSize="25sp"
-        android:textColor="#9078b8"
+        android:textColor="@color/primary_dark_color"
         android:textStyle="bold"
         android:layout_gravity="center"/>
 
@@ -113,9 +113,9 @@
         android:id="@+id/regist_btn"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="10dp"
         android:layout_gravity="center"
-        android:backgroundTint="#9078b8"
+        android:backgroundTint="@color/primary_light_color"
         android:text="@string/register"
         android:textColor="@android:color/white"
         android:textSize="18sp"
@@ -123,4 +123,25 @@
         app:cornerRadius="15dp"
         />
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center">
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Already registered?"
+            android:fontFamily="sans-serif-medium"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/loginTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:text="Login here."
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/primary_light_color"/>
+    </LinearLayout>
 </LinearLayout>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradien">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/transparent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/dateTV"
+            android:layout_width="115dp"
+            android:layout_height="wrap_content"
+            android:text="16 Sept"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/clockInTV"
+            android:layout_width="115dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="09:00 AM"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/clockOutTV"
+            android:layout_width="115dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="05:00 PM"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+</RelativeLayout>
