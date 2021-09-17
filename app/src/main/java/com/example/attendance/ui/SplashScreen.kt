@@ -1,4 +1,4 @@
-package com.example.attendance
+package com.example.attendance.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
