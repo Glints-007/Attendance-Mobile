@@ -36,16 +36,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getCurrentTime(): String {
-        val currentTime = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date())
-        return currentTime
+        return SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date())
     }
 
-    fun getDay():  String{
-        val day = SimpleDateFormat("EEEE", Locale.getDefault()).format(Date())
-        return day
+    fun getDay(): String {
+        return SimpleDateFormat("EEEE", Locale.getDefault()).format(Date())
     }
-    fun getTodayState(): String{
-        val currentDate = SimpleDateFormat("dd/MM/yyyy",Locale.getDefault()).format(Date())
-        return currentDate
+    fun getTodayState(): String {
+        return SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
     }
 }
