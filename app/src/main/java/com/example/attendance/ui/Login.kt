@@ -30,12 +30,12 @@ class Login : AppCompatActivity() {
     }
 
     private fun initAction(){
-//        forgotPass.setOnClickListener {
-//            val intent = Intent(this, Regist::class.java)
-//            startActivity(intent)
-//            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
-//            finish()
-//        }
+        forgotPass.setOnClickListener {
+            val intent = Intent(this, ForgotPass::class.java)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
+            finish()
+        }
 
         loginBtn.setOnClickListener {
 //            val loginReq = LoginReq()
