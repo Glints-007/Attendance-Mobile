@@ -2,41 +2,87 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradien">
+    android:layout_marginBottom="20dp"
+    android:gravity="center">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="325dp"
         android:layout_height="80dp"
-        android:background="@color/transparent"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="12dp">
+        android:background="@drawable/border"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/dateTV"
-            android:layout_width="115dp"
-            android:layout_height="wrap_content"
-            android:text="16 Sept"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/clockInTV"
-            android:layout_width="115dp"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:orientation="vertical"
             android:gravity="center"
-            android:text="09:00 AM"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:background="@drawable/date_bg">
+            <TextView
+                android:id="@+id/dateTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="19"
+                android:fontFamily="@font/roboto_bold"
+                android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/dayTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tue, Sept 2021"
+                android:textSize="8sp"
+                android:fontFamily="@font/roboto_medium"
+                android:textColor="@color/black"/>
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/clockOutTV"
-            android:layout_width="115dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:text="05:00 PM"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
+        <LinearLayout
+            android:layout_width="110dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="12dp"
+            android:gravity="center">
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Clock In"
+                android:textSize="10sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_medium"/>
+
+            <TextView
+                android:id="@+id/clockIn_Log"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="09:00 AM"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_bold"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="110dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="12dp"
+            android:gravity="center">
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Clock Out"
+                android:textSize="10sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_medium"/>
+
+            <TextView
+                android:id="@+id/clockOut_Log"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="05:00 PM"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_bold"/>
+        </LinearLayout>
+
     </LinearLayout>
 
 </RelativeLayout>

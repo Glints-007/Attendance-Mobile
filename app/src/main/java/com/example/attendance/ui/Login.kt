@@ -1,9 +1,10 @@
-package com.example.attendance
+package com.example.attendance.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import com.example.attendance.R
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
@@ -47,7 +48,10 @@ class Login : AppCompatActivity() {
                 passLogin.setError("Please enter your password...")
             }
             else{
-
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
+                finish()
             }
         }
 

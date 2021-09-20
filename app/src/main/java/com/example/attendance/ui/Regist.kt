@@ -1,9 +1,10 @@
-package com.example.attendance
+package com.example.attendance.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Patterns
 import com.example.attendance.R
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
@@ -33,13 +34,17 @@ class Regist : AppCompatActivity() {
 
     private fun initAction() {
         registBtn.setOnClickListener {
-            if (TextUtils.isEmpty(emailRegist.text.toString())){
+            if (TextUtils.isEmpty(emailRegist.text.toString()) or !Patterns.EMAIL_ADDRESS.matcher(emailRegist.text.toString()).matches()){
                 emailRegist.requestFocus()
-                emailRegist.setError("Please enter your email...")
+                emailRegist.setError("Please enter your email correctly...")
             }
             if (TextUtils.isEmpty(passRegist.text.toString())){
                 passRegist.requestFocus()
                 passRegist.setError("Please enter your password...")
+            }
+            if (passRegist.text.toString().length < 8){
+                passRegist.requestFocus()
+                passRegist.setError("Password contained 8 characters or more..")
             }
             if (TextUtils.isEmpty(confirmPass.text.toString())){
                 confirmPass.requestFocus()
@@ -49,11 +54,12 @@ class Regist : AppCompatActivity() {
                 confirmPass.requestFocus()
                 confirmPass.setError("Wrong password...")
             }
-
-            val intent = Intent(this, Login::class.java)
-            startActivity(intent)
-            overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
-            finish()
+            else{
+                val intent = Intent(this, Login::class.java)
+                startActivity(intent)
+                overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
+                finish()
+            }
         }
 
         loginPage.setOnClickListener {
