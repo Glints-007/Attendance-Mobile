@@ -1,41 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.Regist">
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="12dp"
-        android:src="@mipmap/ic_time_foreground"
-        android:layout_gravity="center"/>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/materialTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="50dp"
-        android:text="Register Account"
-        android:textSize="25sp"
-        android:textColor="@color/primary_dark_color"
+        android:layout_marginTop="136dp"
+        android:fontFamily="serif-monospace"
+        android:text="Reset Password"
+        android:textColor="@color/primary_light_color"
+        android:textSize="28sp"
         android:textStyle="bold"
-        android:layout_gravity="center"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="26dp"
-        android:layout_marginLeft="26dp"
-        android:layout_marginBottom="20dp"
-        app:cardCornerRadius="24dp">
+        android:layout_margin="26dp"
+        app:cardCornerRadius="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialTextView">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -43,28 +44,13 @@
                 android:layout_marginTop="6dp"
                 android:paddingStart="6dp"
                 android:paddingEnd="6dp">
+
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/name_regist"
+                    android:id="@+id/email_reset"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/person"
                     android:background="@drawable/input_scheme_bg"
-                    android:drawablePadding="6dp"
-                    android:hint="@string/name" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:paddingStart="6dp"
-                android:paddingEnd="6dp">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/email_regist"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:drawableStart="@drawable/email_icon"
-                    android:background="@drawable/input_scheme_bg"
                     android:drawablePadding="6dp"
                     android:hint="@string/email"
                     android:inputType="textEmailAddress" />
@@ -75,16 +61,34 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:paddingStart="6dp"
-                android:paddingEnd="6dp"
-                app:passwordToggleEnabled="true">
+                android:paddingEnd="6dp">
+
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/pass_regist"
+                    android:id="@+id/token_reset"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/pass_icon"
                     android:background="@drawable/input_scheme_bg"
+                    android:drawableStart="@drawable/token"
                     android:drawablePadding="6dp"
-                    android:hint="@string/pass"
+                    android:hint="Token" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/pass_reset"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/input_scheme_bg"
+                    android:drawableStart="@drawable/pass_icon"
+                    android:drawablePadding="6dp"
+                    android:hint="New Password"
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -96,52 +100,33 @@
                 android:paddingStart="6dp"
                 android:paddingEnd="6dp"
                 app:passwordToggleEnabled="true">
+
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/confirm_pass"
+                    android:id="@+id/confirm_pass_reset"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/pass_icon"
                     android:background="@drawable/input_scheme_bg"
+                    android:drawableStart="@drawable/pass_icon"
                     android:drawablePadding="6dp"
-                    android:hint="Confirm Password"
+                    android:hint="Confirm New Password"
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/regist_btn"
-        android:layout_width="180dp"
+        android:id="@+id/reset_btn"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center"
         android:backgroundTint="@color/primary_light_color"
-        android:text="@string/register"
+        android:text="Reset Password"
         android:textColor="@android:color/white"
         android:textSize="18sp"
         android:textStyle="bold"
         app:cornerRadius="15dp"
-        />
+        app:layout_constraintBottom_toBottomOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="@+id/cardView"
+        app:layout_constraintStart_toStartOf="@+id/cardView"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center">
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Already registered?"
-            android:fontFamily="sans-serif-medium"/>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/loginTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
-            android:text="Login here."
-            android:fontFamily="sans-serif-medium"
-            android:textColor="@color/primary_light_color"/>
-    </LinearLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
