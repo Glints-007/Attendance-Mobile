@@ -22,7 +22,8 @@ class ForgotPass : AppCompatActivity()  {
 
         sendBtn.setOnClickListener {
             var dialog = CustomDialogFragment()
-            dialog.show(supportFragmentManager,"customDialog")
+            dialog.show(supportFragmentManager, "customDialog")
+
         }
     }
 }

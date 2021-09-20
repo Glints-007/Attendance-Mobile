@@ -16,6 +16,7 @@ class CustomDialogFragment: DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        dialog!!.window?.setBackgroundDrawableResource(R.drawable.border)
         var rootView = inflater.inflate(R.layout.fragment_dialog, container, false)
 
         rootView.reset_btn.setOnClickListener {
@@ -23,5 +24,12 @@ class CustomDialogFragment: DialogFragment() {
             dismiss()
         }
         return rootView
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val width = (resources.displayMetrics.widthPixels * 0.85).toInt()
+//        val height = (resources.displayMetrics.heightPixels * 0.85).toInt()
+        dialog!!.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 }
