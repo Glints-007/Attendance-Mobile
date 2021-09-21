@@ -4,9 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 data class LogoutResponse(
     @SerializedName("content")
-    val content: Any,
+    val content: String,
     @SerializedName("errors")
-    val errors: Any,
+    val errors: String,
     @SerializedName("msg")
     val msg: String,
     @SerializedName("status")

@@ -20,6 +20,7 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var logoutFab: ExtendedFloatingActionButton
+    private lateinit var username: TextView
     private lateinit var timeShow: TextView
     private lateinit var scheduleDate: TextView
     private lateinit var locatTV: TextView
@@ -32,7 +33,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        prefManager = SharedPrefManager(applicationContext)
+
         logoutFab = findViewById(R.id.logout_fab)
+        username = findViewById(R.id.name_user)
         timeShow = findViewById(R.id.timeTV)
         scheduleDate = findViewById(R.id.scheduleTV)
         locatTV = findViewById(R.id.locationTV)
@@ -42,8 +46,18 @@ class MainActivity : AppCompatActivity() {
 
         timeShow.setText(getCurrentTime())
         scheduleDate.setText("${getDay()}, ${getTodayState()}")
+
+        val name = intent.getStringExtra("name")
+        username.setText(name)
+        
+        init()
     }
 
+    private fun init(){
+        logoutFab.setOnClickListener {
+            logout()
+        }
+    }
     fun getCurrentTime(): String {
         return SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date())
     }

@@ -32,6 +32,10 @@ class LoginResponse {
         @Expose
         var token_type: String? = null
 
+        @SerializedName("name")
+        @Expose
+        var name: String? = null
+
         @SerializedName("office_id")
         @Expose
         var office_id: Int? = null

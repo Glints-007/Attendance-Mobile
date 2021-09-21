@@ -79,7 +79,9 @@ class Login : AppCompatActivity() {
                 if (response.isSuccessful){
                     val loginResponse = response.body()
                     if (loginResponse?.content?.status_code == 200){
+                        prefManager.saveUser(loginResponse.content)
                         val intent = Intent(this@Login, MainActivity::class.java)
+                        intent.putExtra("name", loginResponse.content.name)
                         startActivity(intent)
                         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
                         finish()
@@ -98,7 +100,6 @@ class Login : AppCompatActivity() {
                 val message = t.localizedMessage
                 Toast.makeText(this@Login, message, Toast.LENGTH_LONG).show()
             }
-
         })
     }
 }
