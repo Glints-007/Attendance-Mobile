@@ -5,10 +5,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Patterns
+import android.widget.Toast
 import com.example.attendance.R
+import com.example.attendance.api.APIClient
+import com.example.attendance.model.RegistResponse
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class Regist : AppCompatActivity() {
     private lateinit var fullname: TextInputEditText
@@ -55,10 +61,7 @@ class Regist : AppCompatActivity() {
                 confirmPass.setError("Wrong password...")
             }
             else{
-                val intent = Intent(this, Login::class.java)
-                startActivity(intent)
-                overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
-                finish()
+                registUser()
             }
         }
 
@@ -68,5 +71,34 @@ class Regist : AppCompatActivity() {
             overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
             finish()
         }
+    }
+
+    fun registUser(){
+        val name = fullname.text.toString()
+        val email = emailRegist.text.toString()
+        val password = passRegist.text.toString()
+
+        val registRespCall: Call<RegistResponse> =APIClient.service.registUser(name, email, password)
+        registRespCall.enqueue(object : Callback<RegistResponse>{
+            override fun onResponse(call: Call<RegistResponse>, response: Response<RegistResponse>
+            ) {if (response.isSuccessful){
+                Toast.makeText(this@Regist, response.body()!!.msg, Toast.LENGTH_LONG).show()
+
+                val intent = Intent(this@Regist, Login::class.java)
+                startActivity(intent)
+                overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
+                finish()
+            }
+            else{
+                val message = "An error occurred\n Please try again later..."
+                Toast.makeText(this@Regist, message, Toast.LENGTH_LONG).show()
+            }
+            }
+
+            override fun onFailure(call: Call<RegistResponse>, t: Throwable) {
+                val message = t.localizedMessage
+                Toast.makeText(this@Regist, message, Toast.LENGTH_LONG).show()
+            }
+        })
     }
 }

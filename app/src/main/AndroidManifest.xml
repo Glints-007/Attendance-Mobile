@@ -31,7 +31,10 @@
         </activity>
         <activity
             android:name=".ui.Login"
-            android:exported="true"></activity>
+            android:exported="true"/>
+        <activity
+            android:name=".ui.ForgotPass"
+            android:exported="true"/>
 
         <meta-data
             android:name="preloaded_fonts"
