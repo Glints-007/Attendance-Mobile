@@ -32,7 +32,7 @@ interface APIService {
     @POST("/api/v1/forgot")
     fun forgotPass(
         @Field("email") email: String,
-    ): Call<FogotResponse>
+    ): Call<ForgotResponse>
 
     @FormUrlEncoded
     @POST("/api/v1/reset")

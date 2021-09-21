@@ -3,7 +3,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 
-class FogotResponse {
+class ForgotResponse {
     @SerializedName("data")
     @Expose
     val `data`: Data? = null

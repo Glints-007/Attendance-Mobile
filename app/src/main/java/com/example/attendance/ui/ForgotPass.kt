@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.attendance.R
 import com.example.attendance.api.APIClient
-import com.example.attendance.model.FogotResponse
+import com.example.attendance.model.ForgotResponse
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
@@ -41,9 +41,9 @@ class ForgotPass : AppCompatActivity()  {
 
     fun  forgotPass(){
         val email = email.text.toString()
-        val forgotRespCall: Call<FogotResponse> =APIClient.service.forgotPass(email)
-        forgotRespCall.enqueue(object : Callback<FogotResponse>{
-            override fun onResponse(call: Call<FogotResponse>, response: Response<FogotResponse>) {
+        val forgotRespCall: Call<ForgotResponse> =APIClient.service.forgotPass(email)
+        forgotRespCall.enqueue(object : Callback<ForgotResponse>{
+            override fun onResponse(call: Call<ForgotResponse>, response: Response<ForgotResponse>) {
                 if (response.isSuccessful){
                     Toast.makeText(this@ForgotPass, response.body()!!.data!!.message, Toast.LENGTH_LONG).show()
 
@@ -56,7 +56,7 @@ class ForgotPass : AppCompatActivity()  {
                 }
             }
 
-            override fun onFailure(call: Call<FogotResponse>, t: Throwable) {
+            override fun onFailure(call: Call<ForgotResponse>, t: Throwable) {
                 val message = t.localizedMessage
                 Toast.makeText(this@ForgotPass, message, Toast.LENGTH_LONG).show()
             }
