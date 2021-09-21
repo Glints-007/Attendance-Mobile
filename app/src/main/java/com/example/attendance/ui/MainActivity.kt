@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
         val name = intent.getStringExtra("name")
         username.setText(name)
-        
+
         init()
     }
 

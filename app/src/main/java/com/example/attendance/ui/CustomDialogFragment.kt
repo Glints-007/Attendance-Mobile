@@ -2,7 +2,6 @@ package com.example.attendance.ui
 
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.attendance.R
 import com.example.attendance.api.APIClient
-import com.example.attendance.model.ResetPassResp
+import com.example.attendance.model.ResetResponse
 import kotlinx.android.synthetic.main.fragment_dialog.*
 import kotlinx.android.synthetic.main.fragment_dialog.view.*
 import retrofit2.Call
@@ -66,9 +65,9 @@ class CustomDialogFragment: DialogFragment() {
         val password = pass_reset.text.toString()
         val confirm_password = confirm_pass_reset.text.toString()
 
-        val resetRespCall: Call<ResetPassResp> = APIClient.service.resetPass(email, token, password, confirm_password)
-        resetRespCall.enqueue(object : Callback<ResetPassResp>{
-            override fun onResponse(call: Call<ResetPassResp>, response: Response<ResetPassResp>) {
+        val resetRespCall: Call<ResetResponse> = APIClient.service.resetPass(email, token, password, confirm_password)
+        resetRespCall.enqueue(object : Callback<ResetResponse>{
+            override fun onResponse(call: Call<ResetResponse>, response: Response<ResetResponse>) {
                 if (response.isSuccessful){
                     Toast.makeText(context, response.body()!!.msg, Toast.LENGTH_LONG).show()
                     dismiss()
@@ -79,7 +78,7 @@ class CustomDialogFragment: DialogFragment() {
                 }
             }
 
-            override fun onFailure(call: Call<ResetPassResp>, t: Throwable) {
+            override fun onFailure(call: Call<ResetResponse>, t: Throwable) {
                 val message = t.localizedMessage
                 Toast.makeText(context, message, Toast.LENGTH_LONG).show()
             }

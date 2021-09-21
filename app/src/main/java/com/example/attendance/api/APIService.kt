@@ -41,5 +41,5 @@ interface APIService {
         @Field("token") token: String,
         @Field("password") password: String,
         @Field("confirm_password") confirm_password: String
-    ): Call<ResetPassResp>
+    ): Call<ResetResponse>
 }

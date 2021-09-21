@@ -2,7 +2,7 @@ package com.example.attendance.model
 import com.google.gson.annotations.SerializedName
 
 
-data class ResetPassResp(
+data class ResetResponse(
     @SerializedName("content")
     val content: String,
     @SerializedName("errors")
