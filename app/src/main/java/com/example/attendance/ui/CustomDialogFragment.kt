@@ -53,7 +53,6 @@ class CustomDialogFragment: DialogFragment() {
         super.onStart()
         val window = dialog!!.window
         window!!.setBackgroundDrawableResource(R.drawable.border)
-//        window.setGravity(Gravity.BOTTOM)
 
         val width = (resources.displayMetrics.widthPixels * 0.85).toInt()
         window.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)

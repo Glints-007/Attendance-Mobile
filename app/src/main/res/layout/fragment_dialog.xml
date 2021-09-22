@@ -4,21 +4,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="6dp">
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/materialTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="136dp"
-        android:fontFamily="serif-monospace"
-        android:text="Reset Password"
-        android:textColor="@color/primary_light_color"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:padding="6dp"
+    android:background="@drawable/gradien">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -118,7 +105,7 @@
         android:id="@+id/reset_btn"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/primary_light_color"
+        android:backgroundTint="@color/primary_dark_color"
         android:text="Reset Password"
         android:textColor="@android:color/white"
         android:textSize="18sp"

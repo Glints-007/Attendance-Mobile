@@ -5,12 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".ui.SplashScreen">
+    tools:context=".ui.SplashScreen"
+    android:background="@drawable/gradien">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/splash"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
         android:src="@mipmap/ic_time_foreground"
         android:layout_gravity="center"/>
 </LinearLayout>
