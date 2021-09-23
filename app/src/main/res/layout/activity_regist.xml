@@ -5,24 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.Regist">
+    tools:context=".ui.Regist"
+    android:background="@drawable/gradien">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:src="@mipmap/ic_time_foreground"
         android:layout_gravity="center"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="40dp"
         android:text="Register Account"
         android:textSize="25sp"
-        android:textColor="@color/primary_dark_color"
-        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:fontFamily="@font/roboto_bold"
         android:layout_gravity="center"/>
 
     <androidx.cardview.widget.CardView
@@ -115,7 +114,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_gravity="center"
-        android:backgroundTint="@color/primary_light_color"
+        android:backgroundTint="@color/primary_dark_color"
         android:text="@string/register"
         android:textColor="@android:color/white"
         android:textSize="18sp"
@@ -141,7 +140,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="6dp"
             android:text="Login here."
-            android:fontFamily="sans-serif-medium"
-            android:textColor="@color/primary_light_color"/>
+            android:fontFamily="@font/roboto_medium"
+            android:textColor="@color/white"/>
     </LinearLayout>
 </LinearLayout>
