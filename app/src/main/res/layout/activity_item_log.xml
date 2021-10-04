@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="20dp"
-    android:gravity="center">
+    android:gravity="center_horizontal">
 
     <LinearLayout
         android:layout_width="325dp"
@@ -31,6 +31,7 @@
                 android:layout_height="wrap_content"
                 android:text="Tue, Sept 2021"
                 android:textSize="8sp"
+                android:gravity="center"
                 android:fontFamily="@font/roboto_medium"
                 android:textColor="@color/black"/>
         </LinearLayout>

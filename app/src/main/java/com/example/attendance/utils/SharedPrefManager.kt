@@ -1,4 +1,4 @@
-package com.example.attendance
+package com.example.attendance.utils
 
 import android.content.Context
 import android.content.SharedPreferences

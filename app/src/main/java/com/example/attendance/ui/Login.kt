@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
 import com.example.attendance.R
-import com.example.attendance.SharedPrefManager
+import com.example.attendance.utils.SharedPrefManager
 import com.example.attendance.api.APIClient
 import com.example.attendance.model.LoginResponse
 import com.google.android.material.button.MaterialButton

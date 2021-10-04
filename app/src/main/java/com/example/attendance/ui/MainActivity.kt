@@ -16,13 +16,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.attendance.R
-import com.example.attendance.SharedPrefManager
+import com.example.attendance.utils.SharedPrefManager
 import com.example.attendance.api.APIClient
+import com.example.attendance.model.ClockHistoryResponse
 import com.example.attendance.model.ClockInResponse
 import com.example.attendance.model.ClockOutResponse
 import com.example.attendance.model.LogoutResponse
+import com.example.attendance.utils.Adapter
 import com.google.android.gms.location.*
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -96,6 +99,11 @@ class MainActivity : AppCompatActivity() {
         username.text = name
 
         fusedLocationProvider = LocationServices.getFusedLocationProviderClient(this)
+
+        // Recycler View
+        timeLog.setHasFixedSize(true)
+        timeLog.layoutManager = LinearLayoutManager(this)
+        getLog()
 
         initAction()
     }
@@ -339,4 +347,28 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
+    private fun getLog() {
+        APIClient.service.clockHistory("Bearer ${prefManager.token}")
+            .enqueue(object : Callback<List<ClockHistoryResponse>>{
+                override fun onResponse(call: Call<List<ClockHistoryResponse>>,
+                                        response: Response<List<ClockHistoryResponse>>
+                ) {if (response.isSuccessful){
+                    val index: List<ClockHistoryResponse>? = response.body()
+                    val adapter = Adapter(this@MainActivity, index!!)
+                    timeLog.adapter = adapter
+                }
+                else{
+                    val message = "An error occurred\nPlease try again later..."
+                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                }
+                }
+
+                override fun onFailure(call: Call<List<ClockHistoryResponse>>, t: Throwable) {
+                    val message = t.localizedMessage
+                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                }
+            })
+    }
+
 }

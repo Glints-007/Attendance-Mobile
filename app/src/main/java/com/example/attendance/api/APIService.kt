@@ -55,4 +55,9 @@ interface APIService {
         @Field("lat") lat: Double,
         @Field("long") long: Double
     ): Call<ClockOutResponse>
+
+    @GET("/api/v1/clock-history")
+    fun clockHistory(
+        @Header("Authorization") token: String,
+    ): Call<List<ClockHistoryResponse>>
 }
