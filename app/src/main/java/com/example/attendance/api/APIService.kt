@@ -47,4 +47,12 @@ interface APIService {
         @Field("lat") lat: Double,
         @Field("long") long: Double
     ): Call<ClockInResponse>
+
+    @FormUrlEncoded
+    @PUT("/api/v1/clock-out")
+    fun clockOut(
+        @Header("Authorization") token: String,
+        @Field("lat") lat: Double,
+        @Field("long") long: Double
+    ): Call<ClockOutResponse>
 }

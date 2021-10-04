@@ -21,6 +21,7 @@ import com.example.attendance.R
 import com.example.attendance.SharedPrefManager
 import com.example.attendance.api.APIClient
 import com.example.attendance.model.ClockInResponse
+import com.example.attendance.model.ClockOutResponse
 import com.example.attendance.model.LogoutResponse
 import com.google.android.gms.location.*
 import com.google.android.material.button.MaterialButton
@@ -89,7 +90,7 @@ class MainActivity : AppCompatActivity() {
         timeLog = findViewById(R.id.timeLogRV)
 
         timeShow.text = getCurrentTime()
-        scheduleDate.text = "${getDay()}, ${getTodayState()}"
+        scheduleDate.text = "${getTodayState()}"
 
         val name = intent.getStringExtra("name")
         username.text = name
@@ -106,6 +107,10 @@ class MainActivity : AppCompatActivity() {
 
         clockInBtn.setOnClickListener {
             clockIn()
+        }
+
+        clockOutBtn.setOnClickListener {
+            clockOut()
         }
     }
 
@@ -260,14 +265,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getCurrentTime(): String {
-        return SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date())
-    }
-
-    fun getDay(): String {
-        return SimpleDateFormat("EEEE", Locale.getDefault()).format(Date())
+        return SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
     }
     fun getTodayState(): String {
-        return SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+        return SimpleDateFormat("EEEE, MMM d, yyyy", Locale.getDefault()).format(Date())
     }
 
     fun logout(){
@@ -315,7 +316,27 @@ class MainActivity : AppCompatActivity() {
                 val message = t.localizedMessage
                 Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
             }
+        })
+    }
 
+    private fun clockOut(){
+        val clockOutRespCall: Call<ClockOutResponse> = APIClient.service.clockOut(
+            "Bearer ${prefManager.token}", lat, long)
+        clockOutRespCall.enqueue(object: Callback<ClockOutResponse>{
+            override fun onResponse(call: Call<ClockOutResponse>, response: Response<ClockOutResponse>) {
+                if (response.isSuccessful){
+                    Toast.makeText(this@MainActivity, response.body()!!.msg, Toast.LENGTH_LONG).show()
+                }
+                else{
+                    val message = "Unable to clock in, try again later..."
+                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ClockOutResponse>, t: Throwable) {
+                val message = t.localizedMessage
+                Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+            }
         })
     }
 }
