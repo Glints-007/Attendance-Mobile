@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.attendance.R
 import com.example.attendance.SharedPrefManager
 import com.example.attendance.api.APIClient
+import com.example.attendance.model.ClockInResponse
 import com.example.attendance.model.LogoutResponse
 import com.google.android.gms.location.*
 import com.google.android.material.button.MaterialButton
@@ -30,6 +31,7 @@ import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
     private lateinit var logoutFab: ExtendedFloatingActionButton
@@ -44,6 +46,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var prefManager: SharedPrefManager
 
     private lateinit var fusedLocationProvider: FusedLocationProviderClient
+    private var lat by Delegates.notNull<Double>()
+    private var long by Delegates.notNull<Double>()
 
     companion object {
         private const val MY_PERMISSIONS_REQUEST_LOCATION = 99
@@ -92,8 +96,16 @@ class MainActivity : AppCompatActivity() {
 
         fusedLocationProvider = LocationServices.getFusedLocationProviderClient(this)
 
+        initAction()
+    }
+
+    private fun initAction(){
         logoutFab.setOnClickListener {
             logout()
+        }
+
+        clockInBtn.setOnClickListener {
+            clockIn()
         }
     }
 
@@ -145,9 +157,12 @@ class MainActivity : AppCompatActivity() {
             return
         }
         fusedLocationProvider.lastLocation.addOnSuccessListener(this) { location ->
-            Log.d("Coordinate", "Lat : ${location.latitude} \nLong : ${location.longitude}")
+            lat = location.latitude
+            long = location.longitude
 
-            locatTV.text = "Your location: ${getCityName(location.latitude, location.longitude)}"
+            Log.d("Coordinate", "Lat : $lat \nLong : $long")
+
+            locatTV.text = "Your location: ${getCityName(lat, long)}"
             locatTV.visibility = View.VISIBLE
         }
     }
@@ -279,6 +294,28 @@ class MainActivity : AppCompatActivity() {
                 val message = t.localizedMessage
                 Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
             }
+        })
+    }
+
+    private fun clockIn(){
+        val clockInRespCall: Call<ClockInResponse> = APIClient.service.clockIn(
+            "Bearer ${prefManager.token}", lat, long)
+        clockInRespCall.enqueue(object: Callback<ClockInResponse>{
+            override fun onResponse(call: Call<ClockInResponse>, response: Response<ClockInResponse>) {
+                if (response.isSuccessful){
+                        Toast.makeText(this@MainActivity, response.body()!!.msg, Toast.LENGTH_LONG).show()
+                }
+                else{
+                    val message = "Unable to clock in, try again later..."
+                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ClockInResponse>, t: Throwable) {
+                val message = t.localizedMessage
+                Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+            }
+
         })
     }
 }
