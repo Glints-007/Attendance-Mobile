@@ -12,7 +12,8 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class Adapter(val context: Context, val dataList: List<ClockHistoryResponse>): RecyclerView.Adapter<Adapter.AdapterHolder>(){
+class Adapter(val context: Context, val dataList: List<ClockHistoryResponse>):
+    RecyclerView.Adapter<Adapter.AdapterHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterHolder {
         val view = LayoutInflater.from(context)
             .inflate(R.layout.activity_item_log, parent, false)
@@ -20,14 +21,14 @@ class Adapter(val context: Context, val dataList: List<ClockHistoryResponse>): R
     }
 
     override fun onBindViewHolder(holder: AdapterHolder, position: Int) {
-        val index =dataList[position]
+        val index = dataList[position]
 
-        val dateString = index.createdAt
-        val date = dateString?.getDateWithServerTimeStamp()
+        val date = index.createdAt?.getDateWithServerTimeStamp()
 
         holder.clockInText.text = index.clockIn
         holder.clockOutText.text = index.clockOut
-        holder.dayText.text = date.toString()
+        holder.dateText.text = SimpleDateFormat("d", Locale.getDefault()).format(date)
+        holder.dayText.text = SimpleDateFormat("EEE, MMM d", Locale.getDefault()).format(date)
     }
 
     override fun getItemCount(): Int {
@@ -37,6 +38,7 @@ class Adapter(val context: Context, val dataList: List<ClockHistoryResponse>): R
     inner class AdapterHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         var clockInText: TextView = itemView.findViewById(R.id.clockIn_Log)
         var clockOutText: TextView = itemView.findViewById(R.id.clockOut_Log)
+        var dateText: TextView = itemView.findViewById(R.id.dateTV)
         var dayText: TextView = itemView.findViewById(R.id.dayTV)
     }
 
