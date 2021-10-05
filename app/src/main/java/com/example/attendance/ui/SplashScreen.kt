@@ -15,7 +15,7 @@ class SplashScreen : AppCompatActivity() {
         setContentView(R.layout.activity_splash_screen)
 
         splash = findViewById(R.id.splash)
-        splash.animate().alpha(4000F).setDuration(0)
+        splash.animate().alpha(4000F).duration = 0
 
         Handler().postDelayed({
             val intent = Intent(this, Login::class.java)

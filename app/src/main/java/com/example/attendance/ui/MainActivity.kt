@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
         timeLog = findViewById(R.id.timeLogRV)
 
         timeShow.text = getCurrentTime()
-        scheduleDate.text = "${getTodayState()}"
+        scheduleDate.text = getTodayState()
 
         val name = intent.getStringExtra("name")
         username.text = name
@@ -279,7 +279,7 @@ class MainActivity : AppCompatActivity() {
         return SimpleDateFormat("EEEE, MMM d, yyyy", Locale.getDefault()).format(Date())
     }
 
-    fun logout(){
+    private fun logout(){
         val logoutRespCall: Call<LogoutResponse> = APIClient.service.logoutUser("Bearer ${prefManager.token}")
         logoutRespCall.enqueue(object : Callback<LogoutResponse>{
             override fun onResponse(call: Call<LogoutResponse>, response: Response<LogoutResponse>
@@ -354,8 +354,8 @@ class MainActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<List<ClockHistoryResponse>>,
                                         response: Response<List<ClockHistoryResponse>>
                 ) {if (response.isSuccessful){
-                    val index: List<ClockHistoryResponse>? = response.body()
-                    val adapter = Adapter(this@MainActivity, index!!)
+                    val index = response.body()!!
+                    val adapter = Adapter(baseContext, index)
                     timeLog.adapter = adapter
                 }
                 else{

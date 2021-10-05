@@ -50,11 +50,11 @@ class Login : AppCompatActivity() {
         loginBtn.setOnClickListener {
             if (TextUtils.isEmpty(email_Login.text.toString())){
                 email_Login.requestFocus()
-                email_Login.setError("Please enter your email...")
+                email_Login.error = "Please enter your email..."
             }
             if (TextUtils.isEmpty(passLogin.text.toString())){
                 passLogin.requestFocus()
-                passLogin.setError("Please enter your password...")
+                passLogin.error = "Please enter your password..."
             }
             else{
                 loginUser()
