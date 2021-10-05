@@ -139,9 +139,10 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/timeLogRV"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="9dp"
+            android:layout_gravity="center"
             tools:listitem="@layout/activity_item_log" />
     </LinearLayout>
 </RelativeLayout>
