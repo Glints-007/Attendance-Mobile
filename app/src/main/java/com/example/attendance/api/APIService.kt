@@ -2,10 +2,7 @@ package com.example.attendance.api
 
 import com.example.attendance.model.*
 import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface APIService {
     @FormUrlEncoded
@@ -42,4 +39,25 @@ interface APIService {
         @Field("password") password: String,
         @Field("confirm_password") confirm_password: String
     ): Call<ResetResponse>
+
+    @FormUrlEncoded
+    @POST("/api/v1/clock-in")
+    fun clockIn(
+        @Header("Authorization") token: String,
+        @Field("lat") lat: Double,
+        @Field("long") long: Double
+    ): Call<ClockInResponse>
+
+    @FormUrlEncoded
+    @PUT("/api/v1/clock-out")
+    fun clockOut(
+        @Header("Authorization") token: String,
+        @Field("lat") lat: Double,
+        @Field("long") long: Double
+    ): Call<ClockOutResponse>
+
+    @GET("/api/v1/clock-history")
+    fun clockHistory(
+        @Header("Authorization") token: String,
+    ): Call<List<ClockHistoryResponse>>
 }

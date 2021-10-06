@@ -16,11 +16,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.attendance.R
-import com.example.attendance.SharedPrefManager
+import com.example.attendance.utils.SharedPrefManager
 import com.example.attendance.api.APIClient
+import com.example.attendance.model.ClockHistoryResponse
+import com.example.attendance.model.ClockInResponse
+import com.example.attendance.model.ClockOutResponse
 import com.example.attendance.model.LogoutResponse
+import com.example.attendance.utils.Adapter
 import com.google.android.gms.location.*
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -30,6 +35,7 @@ import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
     private lateinit var logoutFab: ExtendedFloatingActionButton
@@ -44,6 +50,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var prefManager: SharedPrefManager
 
     private lateinit var fusedLocationProvider: FusedLocationProviderClient
+    private var lat by Delegates.notNull<Double>()
+    private var long by Delegates.notNull<Double>()
 
     companion object {
         private const val MY_PERMISSIONS_REQUEST_LOCATION = 99
@@ -85,15 +93,32 @@ class MainActivity : AppCompatActivity() {
         timeLog = findViewById(R.id.timeLogRV)
 
         timeShow.text = getCurrentTime()
-        scheduleDate.text = "${getDay()}, ${getTodayState()}"
+        scheduleDate.text = "${getTodayState()}"
 
         val name = intent.getStringExtra("name")
         username.text = name
 
         fusedLocationProvider = LocationServices.getFusedLocationProviderClient(this)
 
+        // Recycler View
+        timeLog.setHasFixedSize(true)
+        timeLog.layoutManager = LinearLayoutManager(this)
+        getLog()
+
+        initAction()
+    }
+
+    private fun initAction(){
         logoutFab.setOnClickListener {
             logout()
+        }
+
+        clockInBtn.setOnClickListener {
+            clockIn()
+        }
+
+        clockOutBtn.setOnClickListener {
+            clockOut()
         }
     }
 
@@ -145,9 +170,12 @@ class MainActivity : AppCompatActivity() {
             return
         }
         fusedLocationProvider.lastLocation.addOnSuccessListener(this) { location ->
-            Log.d("Coordinate", "Lat : ${location.latitude} \nLong : ${location.longitude}")
+            lat = location.latitude
+            long = location.longitude
 
-            locatTV.text = "Your location: ${getCityName(location.latitude, location.longitude)}"
+            Log.d("Coordinate", "Lat : $lat \nLong : $long")
+
+            locatTV.text = "Your location: ${getCityName(lat, long)}"
             locatTV.visibility = View.VISIBLE
         }
     }
@@ -245,14 +273,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getCurrentTime(): String {
-        return SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date())
-    }
-
-    fun getDay(): String {
-        return SimpleDateFormat("EEEE", Locale.getDefault()).format(Date())
+        return SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
     }
     fun getTodayState(): String {
-        return SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+        return SimpleDateFormat("EEEE, MMM d, yyyy", Locale.getDefault()).format(Date())
     }
 
     fun logout(){
@@ -281,4 +305,70 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
+    private fun clockIn(){
+        val clockInRespCall: Call<ClockInResponse> = APIClient.service.clockIn(
+            "Bearer ${prefManager.token}", lat, long)
+        clockInRespCall.enqueue(object: Callback<ClockInResponse>{
+            override fun onResponse(call: Call<ClockInResponse>, response: Response<ClockInResponse>) {
+                if (response.isSuccessful){
+                        Toast.makeText(this@MainActivity, response.body()!!.msg, Toast.LENGTH_LONG).show()
+                }
+                else{
+                    val message = "Unable to clock in, try again later..."
+                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ClockInResponse>, t: Throwable) {
+                val message = t.localizedMessage
+                Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+            }
+        })
+    }
+
+    private fun clockOut(){
+        val clockOutRespCall: Call<ClockOutResponse> = APIClient.service.clockOut(
+            "Bearer ${prefManager.token}", lat, long)
+        clockOutRespCall.enqueue(object: Callback<ClockOutResponse>{
+            override fun onResponse(call: Call<ClockOutResponse>, response: Response<ClockOutResponse>) {
+                if (response.isSuccessful){
+                    Toast.makeText(this@MainActivity, response.body()!!.msg, Toast.LENGTH_LONG).show()
+                }
+                else{
+                    val message = "Unable to clock in, try again later..."
+                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ClockOutResponse>, t: Throwable) {
+                val message = t.localizedMessage
+                Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+            }
+        })
+    }
+
+    private fun getLog() {
+        APIClient.service.clockHistory("Bearer ${prefManager.token}")
+            .enqueue(object : Callback<List<ClockHistoryResponse>>{
+                override fun onResponse(call: Call<List<ClockHistoryResponse>>,
+                                        response: Response<List<ClockHistoryResponse>>
+                ) {if (response.isSuccessful){
+                    val index: List<ClockHistoryResponse>? = response.body()
+                    val adapter = Adapter(this@MainActivity, index!!)
+                    timeLog.adapter = adapter
+                }
+                else{
+                    val message = "An error occurred\nPlease try again later..."
+                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                }
+                }
+
+                override fun onFailure(call: Call<List<ClockHistoryResponse>>, t: Throwable) {
+                    val message = t.localizedMessage
+                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                }
+            })
+    }
+
 }
