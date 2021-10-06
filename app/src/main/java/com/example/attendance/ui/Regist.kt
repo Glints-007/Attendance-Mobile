@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.example.attendance.R
 import com.example.attendance.api.APIClient
 import com.example.attendance.model.RegistResponse
+import com.example.attendance.utils.ErrorUtils
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
@@ -90,8 +91,8 @@ class Regist : AppCompatActivity() {
                 finish()
             }
             else{
-                val message = "An error occurred\n Please try again later..."
-                Toast.makeText(this@Regist, message, Toast.LENGTH_LONG).show()
+                val apiError = ErrorUtils.parseError(response)
+                Toast.makeText(this@Regist, apiError.message(), Toast.LENGTH_LONG).show()
             }
             }
 

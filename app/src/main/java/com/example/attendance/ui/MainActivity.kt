@@ -24,6 +24,7 @@ import com.example.attendance.model.ClockInResponse
 import com.example.attendance.model.ClockOutResponse
 import com.example.attendance.model.LogoutResponse
 import com.example.attendance.utils.Adapter
+import com.example.attendance.utils.ErrorUtils
 import com.google.android.gms.location.*
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -288,8 +289,8 @@ class MainActivity : AppCompatActivity() {
                     finish()
                 }
                 else{
-                    val message = "Something went wrong\nPlease try again later..."
-                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                    val apiError = ErrorUtils.parseError(response)
+                    Toast.makeText(this@MainActivity, apiError.message(), Toast.LENGTH_LONG).show()
                 }
             }
 
@@ -309,8 +310,8 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(this@MainActivity, response.body()!!.msg, Toast.LENGTH_LONG).show()
                 }
                 else{
-                    val message = "Unable to clock in, try again later..."
-                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                    val apiError = ErrorUtils.parseError(response)
+                    Toast.makeText(this@MainActivity, apiError.message(), Toast.LENGTH_LONG).show()
                 }
             }
 
@@ -330,8 +331,8 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this@MainActivity, response.body()!!.msg, Toast.LENGTH_LONG).show()
                 }
                 else{
-                    val message = "Unable to clock in, try again later..."
-                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                    val apiError = ErrorUtils.parseError(response)
+                    Toast.makeText(this@MainActivity, apiError.message(), Toast.LENGTH_LONG).show()
                 }
             }
 
@@ -353,8 +354,8 @@ class MainActivity : AppCompatActivity() {
                     timeLog.adapter = adapter
                 }
                 else{
-                    val message = "An error occurred\nPlease try again later..."
-                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                    val apiError = ErrorUtils.parseError(response)
+                    Toast.makeText(this@MainActivity, apiError.message(), Toast.LENGTH_LONG).show()
                 }
                 }
 

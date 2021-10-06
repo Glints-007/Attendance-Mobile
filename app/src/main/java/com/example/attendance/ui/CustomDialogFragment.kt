@@ -10,6 +10,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.attendance.R
 import com.example.attendance.api.APIClient
 import com.example.attendance.model.ResetResponse
+import com.example.attendance.utils.ErrorUtils
 import kotlinx.android.synthetic.main.fragment_dialog.*
 import kotlinx.android.synthetic.main.fragment_dialog.view.*
 import retrofit2.Call
@@ -23,7 +24,7 @@ class CustomDialogFragment: DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var rootView = inflater.inflate(R.layout.fragment_dialog, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_dialog, container, false)
 
         rootView.reset_btn.setOnClickListener {
             if (TextUtils.isEmpty(email_reset.text.toString())){
@@ -72,8 +73,8 @@ class CustomDialogFragment: DialogFragment() {
                     dismiss()
                 }
                 else{
-                    val message = "An error occurred\n Please try again later..."
-                    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+                    val apiError = ErrorUtils.parseError(response)
+                    Toast.makeText(context, apiError.message(), Toast.LENGTH_LONG).show()
                 }
             }
 

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.attendance.R
 import com.example.attendance.api.APIClient
 import com.example.attendance.model.ForgotResponse
+import com.example.attendance.utils.ErrorUtils
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
@@ -47,12 +48,13 @@ class ForgotPass : AppCompatActivity()  {
                 if (response.isSuccessful){
                     Toast.makeText(this@ForgotPass, response.body()!!.data!!.message, Toast.LENGTH_LONG).show()
 
-                    var dialog = CustomDialogFragment()
+                    val dialog = CustomDialogFragment()
                     overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
                     dialog.show(supportFragmentManager, "customDialog")
                 }
                 else{
-                    Toast.makeText(this@ForgotPass, response.body()!!.data!!.message, Toast.LENGTH_LONG).show()
+                    val apiError = ErrorUtils.parseError(response)
+                    Toast.makeText(this@ForgotPass, apiError.message(), Toast.LENGTH_LONG).show()
                 }
             }
 

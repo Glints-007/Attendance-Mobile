@@ -9,6 +9,7 @@ import com.example.attendance.R
 import com.example.attendance.utils.SharedPrefManager
 import com.example.attendance.api.APIClient
 import com.example.attendance.model.LoginResponse
+import com.example.attendance.utils.ErrorUtils
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
@@ -91,8 +92,8 @@ class Login : AppCompatActivity() {
                     }
                 }
                 else{
-                    val message = "Unable to login with the provided credential..."
-                    Toast.makeText(this@Login, message, Toast.LENGTH_LONG).show()
+                    val apiError = ErrorUtils.parseError(response)
+                    Toast.makeText(this@Login, apiError.message(), Toast.LENGTH_LONG).show()
                 }
             }
 
