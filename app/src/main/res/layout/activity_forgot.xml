@@ -85,7 +85,6 @@
         android:id="@+id/login_page_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
         android:fontFamily="@font/roboto_medium"
         android:text="Back to the previous page"
         android:textColor="@color/white"

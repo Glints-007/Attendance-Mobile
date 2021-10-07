@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var locatTV: TextView
     private lateinit var clockInBtn: MaterialButton
     private lateinit var clockOutBtn: MaterialButton
+    private lateinit var refreshTV: TextView
     private lateinit var timeLog: RecyclerView
 
     private lateinit var prefManager: SharedPrefManager
@@ -89,6 +90,7 @@ class MainActivity : AppCompatActivity() {
         locatTV = findViewById(R.id.locationTV)
         clockInBtn = findViewById(R.id.clockIn_Btn)
         clockOutBtn = findViewById(R.id.clockOut_Btn)
+        refreshTV = findViewById(R.id.refreshTV)
         timeLog = findViewById(R.id.timeLogRV)
 
         timeShow.text = getCurrentTime()
@@ -118,6 +120,10 @@ class MainActivity : AppCompatActivity() {
 
         clockOutBtn.setOnClickListener {
             clockOut()
+        }
+
+        refreshTV.setOnClickListener {
+            getLog()
         }
     }
 
