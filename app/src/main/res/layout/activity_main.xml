@@ -14,7 +14,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/roboto_bold"
         android:text="Live Attendance"
@@ -26,7 +26,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_margin="6dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="6dp"
         android:backgroundTint="@color/primary_light_color"
         android:fontFamily="@font/roboto_bold"
         android:text="Logout"
@@ -42,7 +45,7 @@
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:fontFamily="@font/roboto"
             android:text="Welcome,"
             android:textColor="@color/white"
@@ -52,7 +55,7 @@
             android:id="@+id/name_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:fontFamily="@font/roboto_bold"
             android:text="Chaterina Maria Fransisca"
             android:textColor="@color/white"
@@ -128,21 +131,37 @@
         android:orientation="vertical"
         android:padding="17dp">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="9dp"
-            android:fontFamily="@font/roboto_bold"
-            android:text="Attendance Log"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:layout_marginBottom="9dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Attendance Log"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/refreshTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:fontFamily="@font/roboto"
+                android:text="Refresh"
+                android:textColor="@color/primary_dark_color"
+                android:textSize="16sp"
+                app:drawableEndCompat="@drawable/refresh" />
+
+        </androidx.cardview.widget.CardView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/timeLogRV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="9dp"
             android:layout_gravity="center"
+            android:paddingTop="9dp"
             tools:listitem="@layout/activity_item_log" />
     </LinearLayout>
 </RelativeLayout>
