@@ -10,6 +10,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.attendance.R
 import com.example.attendance.api.APIClient
 import com.example.attendance.model.ResetResponse
+import com.example.attendance.utils.ErrorUtils
 import kotlinx.android.synthetic.main.fragment_dialog.*
 import kotlinx.android.synthetic.main.fragment_dialog.view.*
 import retrofit2.Call
@@ -23,24 +24,24 @@ class CustomDialogFragment: DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var rootView = inflater.inflate(R.layout.fragment_dialog, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_dialog, container, false)
 
         rootView.reset_btn.setOnClickListener {
             if (TextUtils.isEmpty(email_reset.text.toString())){
                 email_reset.requestFocus()
-                email_reset.setError("Please enter your email...")
+                email_reset.error = "Please enter your email..."
             }
             if (TextUtils.isEmpty(token_reset.text.toString())){
                 token_reset.requestFocus()
-                token_reset.setError("Please enter the token that has been sent to your email...")
+                token_reset.error = "Please enter the token that has been sent to your email..."
             }
             if (TextUtils.isEmpty(pass_reset.text.toString())){
                 pass_reset.requestFocus()
-                pass_reset.setError("Please enter your new password...")
+                pass_reset.error = "Please enter your new password..."
             }
             if (confirm_pass_reset.text.toString() != pass_reset.text.toString()){
                 confirm_pass_reset.requestFocus()
-                confirm_pass_reset.setError("Wrong password...")
+                confirm_pass_reset.error = "Wrong password..."
             }
             else {
                 resetPass()
@@ -72,8 +73,8 @@ class CustomDialogFragment: DialogFragment() {
                     dismiss()
                 }
                 else{
-                    val message = "An error occurred\n Please try again later..."
-                    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+                    val apiError = ErrorUtils.parseError(response)
+                    Toast.makeText(context, apiError.message(), Toast.LENGTH_LONG).show()
                 }
             }
 

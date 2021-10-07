@@ -1,7 +1,6 @@
 package com.example.attendance.ui
 
 import android.Manifest
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
@@ -9,7 +8,6 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -26,6 +24,7 @@ import com.example.attendance.model.ClockInResponse
 import com.example.attendance.model.ClockOutResponse
 import com.example.attendance.model.LogoutResponse
 import com.example.attendance.utils.Adapter
+import com.example.attendance.utils.ErrorUtils
 import com.google.android.gms.location.*
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -93,7 +92,7 @@ class MainActivity : AppCompatActivity() {
         timeLog = findViewById(R.id.timeLogRV)
 
         timeShow.text = getCurrentTime()
-        scheduleDate.text = "${getTodayState()}"
+        scheduleDate.text = getTodayState()
 
         val name = intent.getStringExtra("name")
         username.text = name
@@ -173,8 +172,6 @@ class MainActivity : AppCompatActivity() {
             lat = location.latitude
             long = location.longitude
 
-            Log.d("Coordinate", "Lat : $lat \nLong : $long")
-
             locatTV.text = "Your location: ${getCityName(lat, long)}"
             locatTV.visibility = View.VISIBLE
         }
@@ -197,7 +194,6 @@ class MainActivity : AppCompatActivity() {
 
         val cityName = address[0].locality
         val countryName = address[0].countryName
-        Log.d("Debug:", "City: $cityName ; Country: $countryName")
         return "$cityName, $countryName"
     }
 
@@ -246,7 +242,6 @@ class MainActivity : AppCompatActivity() {
         requestCode: Int, permissions: Array<String>, grantResults: IntArray)
     {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        Log.i(TAG, "onRequestPermissionResult")
         if (requestCode == MY_PERMISSIONS_REQUEST_LOCATION) {
             when (requestCode) {
                 MY_PERMISSIONS_REQUEST_LOCATION -> {
@@ -279,7 +274,7 @@ class MainActivity : AppCompatActivity() {
         return SimpleDateFormat("EEEE, MMM d, yyyy", Locale.getDefault()).format(Date())
     }
 
-    fun logout(){
+    private fun logout(){
         val logoutRespCall: Call<LogoutResponse> = APIClient.service.logoutUser("Bearer ${prefManager.token}")
         logoutRespCall.enqueue(object : Callback<LogoutResponse>{
             override fun onResponse(call: Call<LogoutResponse>, response: Response<LogoutResponse>
@@ -294,8 +289,8 @@ class MainActivity : AppCompatActivity() {
                     finish()
                 }
                 else{
-                    val message = "Something went wrong\nPlease try again later..."
-                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                    val apiError = ErrorUtils.parseError(response)
+                    Toast.makeText(this@MainActivity, apiError.message(), Toast.LENGTH_LONG).show()
                 }
             }
 
@@ -315,8 +310,8 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(this@MainActivity, response.body()!!.msg, Toast.LENGTH_LONG).show()
                 }
                 else{
-                    val message = "Unable to clock in, try again later..."
-                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                    val apiError = ErrorUtils.parseError(response)
+                    Toast.makeText(this@MainActivity, apiError.message(), Toast.LENGTH_LONG).show()
                 }
             }
 
@@ -336,8 +331,8 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this@MainActivity, response.body()!!.msg, Toast.LENGTH_LONG).show()
                 }
                 else{
-                    val message = "Unable to clock in, try again later..."
-                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                    val apiError = ErrorUtils.parseError(response)
+                    Toast.makeText(this@MainActivity, apiError.message(), Toast.LENGTH_LONG).show()
                 }
             }
 
@@ -354,13 +349,13 @@ class MainActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<List<ClockHistoryResponse>>,
                                         response: Response<List<ClockHistoryResponse>>
                 ) {if (response.isSuccessful){
-                    val index: List<ClockHistoryResponse>? = response.body()
-                    val adapter = Adapter(this@MainActivity, index!!)
+                    val index = response.body()!!
+                    val adapter = Adapter(baseContext, index)
                     timeLog.adapter = adapter
                 }
                 else{
-                    val message = "An error occurred\nPlease try again later..."
-                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                    val apiError = ErrorUtils.parseError(response)
+                    Toast.makeText(this@MainActivity, apiError.message(), Toast.LENGTH_LONG).show()
                 }
                 }
 

@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.example.attendance.R
 import com.example.attendance.api.APIClient
 import com.example.attendance.model.RegistResponse
+import com.example.attendance.utils.ErrorUtils
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
@@ -42,23 +43,23 @@ class Regist : AppCompatActivity() {
         registBtn.setOnClickListener {
             if (TextUtils.isEmpty(emailRegist.text.toString()) or !Patterns.EMAIL_ADDRESS.matcher(emailRegist.text.toString()).matches()){
                 emailRegist.requestFocus()
-                emailRegist.setError("Please enter your email correctly...")
+                emailRegist.error = "Please enter your email correctly..."
             }
             if (TextUtils.isEmpty(passRegist.text.toString())){
                 passRegist.requestFocus()
-                passRegist.setError("Please enter your password...")
+                passRegist.error = "Please enter your password..."
             }
             if (passRegist.text.toString().length < 8){
                 passRegist.requestFocus()
-                passRegist.setError("Password contained 8 characters or more..")
+                passRegist.error = "Password contained 8 characters or more.."
             }
             if (TextUtils.isEmpty(confirmPass.text.toString())){
                 confirmPass.requestFocus()
-                confirmPass.setError("Please confirm your password...")
+                confirmPass.error = "Please confirm your password..."
             }
             if (confirmPass.text.toString() != passRegist.text.toString()){
                 confirmPass.requestFocus()
-                confirmPass.setError("Wrong password...")
+                confirmPass.error = "Wrong password..."
             }
             else{
                 registUser()
@@ -90,8 +91,8 @@ class Regist : AppCompatActivity() {
                 finish()
             }
             else{
-                val message = "An error occurred\n Please try again later..."
-                Toast.makeText(this@Regist, message, Toast.LENGTH_LONG).show()
+                val apiError = ErrorUtils.parseError(response)
+                Toast.makeText(this@Regist, apiError.message(), Toast.LENGTH_LONG).show()
             }
             }
 
