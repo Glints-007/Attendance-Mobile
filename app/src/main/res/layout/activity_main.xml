@@ -106,7 +106,8 @@
                 android:backgroundTint="@color/primary_dark_color"
                 android:padding="10dp"
                 android:text="Clock In"
-                app:cornerRadius="5dp" />
+                app:cornerRadius="5dp"
+                android:clickable="false"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/clockOut_Btn"
@@ -117,7 +118,8 @@
                 android:backgroundTint="@color/primary_dark_color"
                 android:padding="10dp"
                 android:text="Clock out"
-                app:cornerRadius="5dp" />
+                app:cornerRadius="5dp"
+                android:clickable="false"/>
         </RelativeLayout>
     </LinearLayout>
 
