@@ -1,13 +1,16 @@
 package com.example.attendance.ui
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
+import android.location.LocationManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
+import android.provider.Settings
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -54,6 +57,7 @@ class MainActivity : AppCompatActivity() {
     private var long by Delegates.notNull<Double>()
 
     companion object {
+        private const val PERMISSION_REQUEST_ENABLE_GPS = 98
         private const val MY_PERMISSIONS_REQUEST_LOCATION = 99
     }
 
@@ -124,23 +128,32 @@ class MainActivity : AppCompatActivity() {
 
         refreshTV.setOnClickListener {
             getLog()
+            getCurrentTime()
         }
+    }
+
+    private fun enableButton(){
+        clockInBtn.isClickable = true
+        clockOutBtn.isClickable = true
     }
 
     override fun onStart() {
         super.onStart()
-        if (!checkPermissions()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions()
+        if (isMapEnabled()){
+            if (!checkPermissions()) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions()
+                }
             }
-        }
-        else {
-            getLastLocation()
+            else {
+                getLastLocation()
+            }
         }
     }
 
     override fun onResume() {
         super.onResume()
+        getCurrentTime()
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             == PackageManager.PERMISSION_GRANTED ||
             ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -163,6 +176,29 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun buildAlertMessageNoGps() {
+        val builder = android.app.AlertDialog.Builder(this)
+        builder
+            .setTitle("GPS Disabled")
+            .setMessage("This application requires GPS to work properly, do you want to enable it?")
+            .setCancelable(false)
+            .setPositiveButton("Yes") { dialog, id ->
+                val enableGpsIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                startActivityForResult(enableGpsIntent, PERMISSION_REQUEST_ENABLE_GPS)
+            }
+        val alert = builder.create()
+        alert.show()
+    }
+
+    private fun isMapEnabled(): Boolean{
+        val manager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            buildAlertMessageNoGps()
+            return false
+        }
+        return true
+    }
+
     private fun getLastLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED ||
@@ -175,6 +211,7 @@ class MainActivity : AppCompatActivity() {
             return
         }
         fusedLocationProvider.lastLocation.addOnSuccessListener(this) { location ->
+            enableButton()
             lat = location.latitude
             long = location.longitude
 
@@ -194,7 +231,20 @@ class MainActivity : AppCompatActivity() {
         return false
     }
 
-    private fun getCityName(lat: Double,long: Double):String{
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode){
+            PERMISSION_REQUEST_ENABLE_GPS ->{
+                if (checkPermissions()){
+                    enableButton()
+                } else{
+                    requestPermissions()
+                }
+            }
+        }
+    }
+
+    private fun getCityName(lat: Double, long: Double):String{
         val geoCoder = Geocoder(this, Locale.getDefault())
         val address = geoCoder.getFromLocation(lat,long,3)
 
@@ -265,7 +315,7 @@ class MainActivity : AppCompatActivity() {
                             )
                         }
                     } else {
-                        Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, "Permission Denied", Toast.LENGTH_LONG).show()
                     }
                     return
                 }
