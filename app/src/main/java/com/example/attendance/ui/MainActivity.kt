@@ -182,7 +182,7 @@ class MainActivity : AppCompatActivity() {
             .setTitle("GPS Disabled")
             .setMessage("This application requires GPS to work properly, do you want to enable it?")
             .setCancelable(false)
-            .setPositiveButton("Yes") { dialog, id ->
+            .setPositiveButton("Yes") { _, _ ->
                 val enableGpsIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                 startActivityForResult(enableGpsIntent, PERMISSION_REQUEST_ENABLE_GPS)
             }
@@ -323,10 +323,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun getCurrentTime(): String {
+    private fun getCurrentTime(): String {
         return SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
     }
-    fun getTodayState(): String {
+    private fun getTodayState(): String {
         return SimpleDateFormat("EEEE, MMM d, yyyy", Locale.getDefault()).format(Date())
     }
 
